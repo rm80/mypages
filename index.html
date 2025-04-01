@@ -22,7 +22,6 @@
             justify-content: center;
             align-items: center;
             margin-top: 20px;
-            width: 100%;
         }
 
         /* Control the position and size of the SVG */
@@ -30,8 +29,6 @@
             margin-top: 20px;
             border: 1px solid #ddd;
             background-color: #fff;
-            width: 90%; /* Chart resizes to 90% of container width */
-            height: auto;
         }
 
         .bar {
@@ -44,7 +41,7 @@
         }
 
         .axis text {
-            font-size: 12px;
+            font-size: 14px;
             font-weight: bold;
             fill: #555;
         }
@@ -83,7 +80,7 @@
     <div id="chart-container">
         <!-- Predefined SVG where the chart will be drawn -->
         <div id="chart">
-            <svg viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid meet">
+            <svg width="1000" height="600">
                 <g id="chart-group" transform="translate(80,50)"></g>
             </svg>
         </div>
@@ -95,9 +92,9 @@
             const dataUrl = "https://raw.githubusercontent.com/rm80/decoded/refs/heads/main/data/statsnz/regional-gross-domestic-product-year-ended-march-2024.csv";
 
             // Dimensions and margins
-            const margin = { top: 50, right: 50, bottom: 100, left: 80 },
-                  width = 900 - margin.left - margin.right,
-                  height = 400 - margin.top - margin.bottom;
+            const margin = { top: 50, right: 50, bottom: 120, left: 80 },
+                  width = 1000 - margin.left - margin.right,
+                  height = 500 - margin.top - margin.bottom;
 
             // Select the existing SVG and chart group
             const svg = d3.select(`#${svgId}`).select("svg");
@@ -115,7 +112,7 @@
                     d.Group === "Gross domestic product, by region and industry" &&
                     d.Series_title_3 === "Gross Domestic Product" &&
                     d.Period === "2024.03" &&
-                    !["New Zealand", "Total North Island", "Total South Island"].includes(d.Series_title_2)
+                    !["New Zealand", "Total North Island", "Total south Island"].includes(d.Series_title_2)
                 );
 
                 // Convert Data_value to numbers
@@ -230,12 +227,6 @@
 
         // Ensure BuildCharts is called only after DOM and scripts are fully loaded
         document.addEventListener("DOMContentLoaded", function () {
-            BuildCharts("chart");
-        });
-
-        // Resize chart dynamically when window resizes
-        window.addEventListener("resize", () => {
-            d3.select("#chart-group").selectAll("*").remove();
             BuildCharts("chart");
         });
     </script>
